@@ -6,6 +6,7 @@ from pynput import keyboard
 
 class AutoBugger:
     pyautogui.FAILSAFE = True
+    pyautogui.PAUSE = 0.01
 
     keyboard_listener = None
 
