@@ -1,6 +1,5 @@
 import pyautogui
-import datetime as dt
-import time
+from datetime import datetime
 from pynput import keyboard
 
 
@@ -9,6 +8,10 @@ class AutoBugger:
     pyautogui.PAUSE = 0.01
 
     keyboard_listener = None
+
+    # Время, когда нужно вывести текст (в формате ЧЧ:ММ:СС)
+    timeToPress = datetime(2023, 10, 19, 00, 00, 00)
+
 
     # Массив для хранения позиций курсора мыши
     click_position = []
@@ -40,9 +43,14 @@ class AutoBugger:
             # Кликаем по позициям из массива self.click_position
             elif key == keyboard.Key.enter:
 
+                while len(self.click_position) > 0:
+                    current_time = datetime.now()
+                    print(f"Осталось: {self.timeToPress-current_time}")
+                    if current_time >= self.timeToPress:
+                        print("Время для вывода текста!")
+                        break
                 for point in self.click_position:
                     pyautogui.click(point)
-
                     print(f"Click on {point}")
 
     def on_release(self, key):
